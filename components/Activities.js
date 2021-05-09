@@ -27,11 +27,10 @@ export default function ShowActivity (){
 
 const styles = StyleSheet.create({
     screen: {
-        padding: 50,
-        top: 70
+        padding: 30
     },
     listItem : {
-        padding: 5,
+        padding: 10,
         textAlign: 'center',
         marginVertical: 10,
         backgroundColor: 'white',
