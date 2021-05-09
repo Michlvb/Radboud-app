@@ -10,10 +10,10 @@ class Navbar extends Component {
     render() {
         return (
             <View style={styles.navBar}>
-                <NavButton icon="home"/>
-                <NavButton icon="bicycle"/>
-                <NavButton icon="camera"/>
-                <NavButton icon="molecule-co2"/>
+                <NavButton icon="home" navigation={this.props.navigation}/>
+                <NavButton icon="bicycle" navigation={this.props.navigation}/>
+                <NavButton icon="camera" navigation={this.props.navigation}/>
+                <NavButton icon="molecule-co2" navigation={this.props.navigation}/>
             </View>
         );
     }

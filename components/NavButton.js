@@ -1,16 +1,28 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 function NavButton(props) {
     console.log()
-    if(props.icon === "home" || props.icon === "camera"){
+    if(props.icon === "home"){
         return (
-            <TouchableOpacity style={styles.navButton} >
+            <TouchableOpacity style={styles.navButton}>
                 <Entypo name={props.icon} size={24} color="black" />
             </TouchableOpacity>
         );
-    } else if (props.icon === "bicycle"){
+    } else if ( props.icon === "camera"){
+        return (
+            <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('Camera')}>
+                <Entypo name={props.icon} size={24} color="black" />
+            </TouchableOpacity>
+        );
+    } 
+    else if (props.icon === "bicycle"){
         return (
             <TouchableOpacity style={styles.navButton} >
                 <Ionicons name={props.icon} size={24} color="black" />
@@ -18,7 +30,7 @@ function NavButton(props) {
         );
     } else {
         return (
-            <TouchableOpacity style={styles.navButton} >
+            <TouchableOpacity style={styles.navButton}>
                 <MaterialCommunityIcons name={props.icon} size={24} color="black" />
             </TouchableOpacity>
         );

@@ -1,5 +1,8 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { StyleSheet, Text, SafeAreaView, Platform, StatusBar, View, Button, TouchableOpacity, ImageBackground } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import {storeHighScore} from './components/firebase.utils'
 
@@ -7,25 +10,32 @@ import ShowActivity from './components/Activities'
 import Header from './components/Header'
 import CameraComp from './components/Camera'
 import Navbar from './components/Navbar' ;
-export default function App() {
-
-  function pushButton() {
-    storeHighScore("Michaël", 10)
-  }
 
 
+const Stack = createStackNavigator();
+
+function HomeScreen({navigation}) {
   return (
-    <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container}>
       <View style={styles.mainPage}>
-      {/* <ImageBackground source={require('./assets/img.jpg')} style={styles.image}>
         <Header />
         <ShowActivity />
-      </ImageBackground> */}
-      {/* <Button title="Hello world" onPress={pushButton}></Button> */}
-      {/* <CameraComp /> */}
       </View>
-        <Navbar />
+        <Navbar navigation={navigation}/>
     </SafeAreaView>
+  )
+}
+
+
+export default function App() {
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Camera" component={CameraComp} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
