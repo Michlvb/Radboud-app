@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { SafeAreaView, StyleSheet, View, StatusBar, TextInput, Text, Button } from "react-native";
 
 
-class Login extends Component {
+export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -13,7 +13,7 @@ class Login extends Component {
                 <View style={styles.mainPage}>
                     <Text style={styles.text}>Gebruikersnaam</Text>
                     <TextInput style={styles.input}></TextInput>
-                    <Button onPress={}/>
+                    <Button title="Submit" onPress={() => this.props.navigation.navigate('Home')} ></Button>
                 </View>
             </SafeAreaView>
         );
@@ -45,4 +45,3 @@ const styles = StyleSheet.create({
         marginLeft: 12
   }
 })
-export default Login;

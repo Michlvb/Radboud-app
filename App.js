@@ -1,19 +1,20 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { StyleSheet, SafeAreaView, Platform, StatusBar, View, Button, TouchableOpacity, ImageBackground } from 'react-native';
-import Home from './components/main page/Home'
-import Login from './components/login page/Login'
-export default function App() {
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import Login from './components/login page/Login'
+import CameraComp from './components/Camera'
+import Home from './components/main page/Home'
 
 const Stack = createStackNavigator();
 
 function HomeScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
-      <Login />
-      {/* <Home /> */}
-
+      <Login navigation={navigation}/>
     </SafeAreaView>
   )
 }
@@ -23,8 +24,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={HomeScreen} />
+        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Camera" component={CameraComp} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -39,4 +41,4 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
-});
+})
