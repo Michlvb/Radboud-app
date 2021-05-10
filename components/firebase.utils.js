@@ -20,17 +20,6 @@ const firebaseConfig = {
     
   };
 
-export const storeHighScore = (userId, score) => {
-  firebase
-    .database()
-    .ref('users/' + userId)
-    .set({
-      highscore: score,
-    });
-}
-
-
-
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }else {

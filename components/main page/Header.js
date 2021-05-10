@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
         padding: 30
     },
     header: {
-        paddingTop: 8,
         color: 'white'
     }
 })
