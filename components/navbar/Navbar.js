@@ -20,7 +20,6 @@ class Navbar extends Component {
 }
 const styles = StyleSheet.create({
     navBar: {
-        flex: 1,
         backgroundColor: 'white',
         borderRadius: 20,
         alignItems: 'center',
