@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-
+//test comment
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
