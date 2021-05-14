@@ -1,19 +1,33 @@
-import React, { Component } from 'react';
+import React, {Component, setState} from 'react';
 import { SafeAreaView, StyleSheet, View, StatusBar, TextInput, Text, Button } from "react-native";
-
+import {AddUser} from '../firebase/firebase.utils'
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            username: "",
+            password: ""
+        };
     }
     render() {
+        
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.mainPage}>
                     <Text style={styles.text}>Gebruikersnaam</Text>
-                    <TextInput style={styles.input}></TextInput>
-                    <Button title="Submit" onPress={() => this.props.navigation.navigate('Home')} ></Button>
+                    <TextInput style={styles.input} onChangeText={(text) => this.setState({...this, username: text})} ></TextInput>
+                    <Text style={styles.text}>Password</Text>
+                    <TextInput style={styles.input} secureTextEntry={true} onChangeText={(text) => this.setState({...this, password: text})}></TextInput>
+                    <Button 
+                    title="Submit" 
+                    onPress={() => 
+                        AddUser(this.state.username, this.state.password)
+                        .then((answer) => {
+                            if(answer) this.props.navigation.navigate('Home')
+                            else console.log(answer)
+                        })}>
+                    </Button>
                 </View>
             </SafeAreaView>
         );
