@@ -19,10 +19,10 @@ const firebaseConfig = {
     messagingSenderId: '640989795548'
   };
 
-//Get users in database
-const getUsers = async () => {
+//Get users from certain department in database
+const getUsersFromDepartment = async (department) => {
   try {
-    var users = database.ref('users/').once('value').then(snapshot => {
+    var users = database.ref('department/' + department).once('value').then(snapshot => {
       var items = []
       snapshot.forEach((child) => {
         items.push(child.key)
@@ -36,22 +36,22 @@ const getUsers = async () => {
 }
 
 //Add user to database
-export const AddUser = async (username, password) => {
-  if(!username || !password) return;
+export const AddUser = async (username, department) => {
+  if(!username || !department) return;
 
-  const users = await getUsers()
+  const users = await getUsersFromDepartment(department)
 
   users.map((name) => {
     if(name == username){
-      Alert.alert("Username already taken, please enter a different one.");
+      Alert.alert("Username already taken. Please enter a different one.");
       return;
     }
   })
-  
+
   try{
     database
-    .ref('users/' + username)
-    .set({password: password})
+    .ref('department/' + department.toLowerCase() +'/'+username.toLowerCase())
+    .set({score: 0})
     Alert.alert("You account has been made!")
   } catch (error) {
     console.log('User not added: ', error.message)

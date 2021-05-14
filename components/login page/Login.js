@@ -7,26 +7,27 @@ export default class Login extends Component {
         super(props);
         this.state = {
             username: "",
-            password: ""
+            department: ""
         };
     }
     render() {
-        
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.mainPage}>
                     <Text style={styles.text}>Gebruikersnaam</Text>
-                    <TextInput style={styles.input} onChangeText={(text) => this.setState({...this, username: text})} ></TextInput>
-                    <Text style={styles.text}>Password</Text>
-                    <TextInput style={styles.input} secureTextEntry={true} onChangeText={(text) => this.setState({...this, password: text})}></TextInput>
+                    <TextInput style={styles.input} onChangeText={(text) => this.setState({...this, username: text.toLowerCase()})} ></TextInput>
+                    <Text style={styles.text}>Afdeling</Text>
+                    <TextInput style={styles.input} onChangeText={(text) => this.setState({...this, department: text.toLowerCase()})}></TextInput>
                     <Button 
                     title="Submit" 
                     onPress={() => 
-                        AddUser(this.state.username, this.state.password)
+                        AddUser(this.state.username, this.state.department)
                         .then((answer) => {
                             if(answer) this.props.navigation.navigate('Home')
                             else console.log(answer)
-                        })}>
+                        }
+                        )
+                        }>
                     </Button>
                 </View>
             </SafeAreaView>
