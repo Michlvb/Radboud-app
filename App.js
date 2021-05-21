@@ -21,7 +21,7 @@ function HomeScreen({navigation}) {
 
 
 export default function App() {
-
+  //test comment
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
