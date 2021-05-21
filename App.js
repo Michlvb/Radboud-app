@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './components/login page/Login'
 import CameraComp from './components/Camera'
 import Home from './components/main page/Home'
+import MapScreen from './components/maps/Maps'
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,8 @@ export default function App() {
         <Stack.Screen name="Login" component={HomeScreen} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Camera" component={CameraComp} />
+        <Stack.Screen name="Maps" component={MapScreen} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
