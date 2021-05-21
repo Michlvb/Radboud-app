@@ -6,21 +6,18 @@ import MapView from 'react-native-maps';
 import RunInfo from './run-info';
 import RunInfoNumeric from './run-info-numeric';
 
-// import Constants from 'expo-constants';
-// import * as Location from 'expo-location';
-
 
 export default class mapScreen extends Component {
     constructor(props) {
       super(props);
       this.state = {};
 
-      setInterval(() => {
-       this.distanceInfo.setState({value: Math.random() * 100}); 
-       this.speedInfo.setState({value: Math.random() * 15}); 
-       this.directionInfo.setState({
-         value: this.directionInfo.state === 'N' ? 'NW' : 'N'}); 
-      }, 1000);
+      // setInterval(() => {
+      //  this.distanceInfo.setState({value: Math.random() * 100}); 
+      //  this.speedInfo.setState({value: Math.random() * 15}); 
+      //  this.directionInfo.setState({
+      //    value: this.directionInfo.state === 'N' ? 'NW' : 'N'}); 
+      // }, 1000);
     }
 
     render() {
