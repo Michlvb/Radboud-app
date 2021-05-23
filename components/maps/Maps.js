@@ -1,37 +1,68 @@
-import React, {Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component, useState, useEffect} from 'react';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
 import MapView from 'react-native-maps';
 
 import RunInfo from './run-info';
 import RunInfoNumeric from './run-info-numeric';
 
+import * as Permissions from 'expo-permissions';
+import Constants from "expo-constants";
+import * as Location from 'expo-location';
 
 export default class mapScreen extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {};
+  state = {
+    mapRegion: null,
+    hasLocationPermissions: false,
+    locationResult: null,
+  };
 
-      // setInterval(() => {
-      //  this.distanceInfo.setState({value: Math.random() * 100}); 
-      //  this.speedInfo.setState({value: Math.random() * 15}); 
-      //  this.directionInfo.setState({
-      //    value: this.directionInfo.state === 'N' ? 'NW' : 'N'}); 
-      // }, 1000);
+  componentDidMount() {
+    this.getLocationAsync();
+  }
+
+  handleMapRegionChange = (mapRegion) => {
+    this.setState({ mapRegion });
+  };
+
+  async getLocationAsync() {
+    // permissions returns only for location permissions on iOS and under certain conditions, see Permissions.LOCATION
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status === "granted") {
+      this.setState({ hasLocationPermissions: true });
+      //  let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+      const location = await Location.getCurrentPositionAsync({});
+      this.setState({ locationResult: JSON.stringify(location) });
+      // Center the map on the location we just fetched.
+      this.setState({
+        mapRegion: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        },
+      });
+    } else {
+      alert("Location permission not granted");
     }
+  }
 
     render() {
         return (
             <View style={{flex: 1}}>
-                <MapView style={styles.map}
+                <MapView
+                  style={styles.mapStyle}
+                  region={this.state.mapRegion}
+                  onRegionChange={this.handleMapRegionChange}
                   showsUserLocation
-                  followsUserLocation
+
                   initialRegion={{
-                    latitude: 37.33307,
-                    longitude: -122.0324,
-                    latitudeDelta: 0.02,
-                    longitudeDelta: 0.02
+                    latitude: 51.924419,
+                    longitude: 4.477733,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
                   }}
+
                 />
                 <View style={styles.infoWrapper}>
                     <RunInfoNumeric title="Distance" unit="km"
@@ -50,6 +81,12 @@ export default class mapScreen extends Component {
     }
 }
 
+
+
+
+
+
+
 const styles = StyleSheet.create({
   infoWrapper: {
     position: 'absolute',
@@ -59,7 +96,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1
   },
-  map: {
-    ...StyleSheet.absoluteFillObject
-  }
+  mapStyle: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+  },
 });
