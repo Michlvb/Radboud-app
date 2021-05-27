@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, SafeAreaView, Platform, StatusBar, View, Button, TouchableOpacity, ImageBackground } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,13 +9,27 @@ import Login from './components/login page/Login'
 import CameraComp from './components/Camera'
 import Home from './components/main page/Home'
 import MapScreen from './components/maps/Maps'
+import {getData} from './components/localstorage/LocalStorage'
+
 
 const Stack = createStackNavigator();
 
-function HomeScreen({navigation}) {
+
+function HomeScreen({navigation}){
+  
+  let [user, setUser] = useState(null)
+  useEffect(() => {
+    const fetchData = async () =>{
+      const data = await getData()
+      setUser(data)
+    }
+    fetchData()
+  }, [])
+
+
   return (
     <SafeAreaView style={styles.container}>
-      <Login navigation={navigation}/>
+      {user !== null ? <Home name={user} navigation={navigation}/>:<Login navigation={navigation}/>}
     </SafeAreaView>
   )
 }
