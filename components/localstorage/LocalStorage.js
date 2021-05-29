@@ -5,9 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const getData = async () => {
     try {
-        const val = await AsyncStorage.getItem("@key")
-        const ww = await AsyncStorage.getItem("@value")
-        return val !== null ? val : null
+        const name = await AsyncStorage.getItem("@key")
+        const val = await AsyncStorage.getItem("@value")
+        return name !== null ?  [name, val]: null
     } catch (e) {
         console.log("No value found: ", e);
         return null;

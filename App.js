@@ -9,14 +9,14 @@ import Login from './components/login page/Login'
 import CameraComp from './components/Camera'
 import Home from './components/main page/Home'
 import MapScreen from './components/maps/Maps'
-import {getData} from './components/localstorage/LocalStorage'
+import {getData, removeItem} from './components/localstorage/LocalStorage'
 
 
 const Stack = createStackNavigator();
 
 
-function HomeScreen({navigation}){
-  
+function LoginScreen({navigation}){
+
   let [user, setUser] = useState(null)
   useEffect(() => {
     const fetchData = async () =>{
@@ -26,10 +26,13 @@ function HomeScreen({navigation}){
     fetchData()
   }, [])
 
-
   return (
+    user == null ? 
     <SafeAreaView style={styles.container}>
-      {user !== null ? <Home name={user} navigation={navigation}/>:<Login navigation={navigation}/>}
+      <Login navigation={navigation}/>
+    </SafeAreaView> :
+    <SafeAreaView style={styles.container}>
+      <Home navigation={navigation} name={user[0]} dep={user[1]}/>
     </SafeAreaView>
   )
 }
@@ -40,11 +43,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Camera" component={CameraComp} />
         <Stack.Screen name="Maps" component={MapScreen} />
-        
       </Stack.Navigator>
     </NavigationContainer>
   );

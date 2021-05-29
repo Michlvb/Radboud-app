@@ -1,17 +1,29 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { View, StyleSheet, StatusBar, SafeAreaView } from 'react-native'
 import Navbar from '../navbar/Navbar'
 import ShowActivity from './Activities'
 import Header from './Header'
 
-function Home(props) {
-    return (
-        <SafeAreaView style={styles.container}>
-            <Header />
-            <ShowActivity />
-            <Navbar navigation={props.navigation}/>
-        </SafeAreaView>
-    );
+export default class Home extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            username: this.props.name,
+            department:  this.props.dep
+        }
+    }
+    
+
+    render()
+    {
+        return (
+            <SafeAreaView style={styles.container}>
+                <Header username={this.state.username}/>
+                <ShowActivity />
+                <Navbar navigation={this.props.navigation}/>
+            </SafeAreaView>
+        )
+    };
 }
 const styles = StyleSheet.create({
       container: {
@@ -22,4 +34,3 @@ const styles = StyleSheet.create({
         paddingRight: 10,
   },
 })
-export default Home;
