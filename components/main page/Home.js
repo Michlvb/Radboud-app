@@ -9,11 +9,11 @@ export default class Home extends Component{
         super(props);
         this.state = {
             username: this.props.name,
-            department:  this.props.dep
+            department:  this.props.dep,
+            score: this.props.score
         }
     }
     
-
     render()
     {
         return (
