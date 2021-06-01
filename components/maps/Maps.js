@@ -1,17 +1,15 @@
 import React, {Component, useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Button, Text, View, Dimensions} from 'react-native';
 
 import MapView, { Marker, Polyline } from 'react-native-maps';
+import haversine from 'haversine';
 
 import RunInfo from './run-info';
 import RunInfoNumeric from './run-info-numeric';
 
-import * as Permissions from 'expo-permissions';
-import Constants from "expo-constants";
 import * as Location from 'expo-location';
 
 let id = 0;
-
 
 export default class mapScreen extends Component {
   constructor(props) {
@@ -20,11 +18,24 @@ export default class mapScreen extends Component {
         mapRegion: null,
         hasLocationPermissions: false,
         locationResult: null,
+        selectedTab: '',
     };
+
+
 
     let watchID = Location.watchPositionAsync(
       { accuracy: 6, timeInterval: 500, distanceInterval: 0 },
       (locationResult) => {
+        let distance = 0;
+
+
+        if (locationResult.coords.speed <= 26){
+          if (this.state.previousCoordinate) {
+            distance = this.state.distance + haversine(this.state.previousCoordinate, locationResult.coords, {unit: 'meter'});
+            this.distanceInfo.setState({ value: distance});
+          }
+        }
+
         this.speedInfo.setState({value: locationResult.coords.speed});
 
         let x = locationResult.coords.heading;
@@ -44,9 +55,15 @@ export default class mapScreen extends Component {
         this.directionInfo.setState({value: 'W'});
         else if (x > 293 && x <= 338)
         this.directionInfo.setState({value: 'NW'});
+
+        this.setState({
+          previousCoordinate: locationResult.coords,
+          distance
+        })
       }
     );
   }
+
     
 
     addMarker(region){
@@ -65,6 +82,7 @@ export default class mapScreen extends Component {
         ladAddedMarker: now,
       });
     }
+  
 
   componentDidMount() {
     this.getLocationAsync();
@@ -75,16 +93,14 @@ export default class mapScreen extends Component {
   handleMapRegionChange = (mapRegion) => {
     this.setState({ mapRegion });
   };
+  
 
   async getLocationAsync() {
-    // permissions returns only for location permissions on iOS and under certain conditions, see Permissions.LOCATION
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status === "granted") {
       this.setState({ hasLocationPermissions: true });
-      //  let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
       const location = await Location.getCurrentPositionAsync({});
       this.setState({ locationResult: location});
-      // Center the map on the location we just fetched.
       this.setState({
         mapRegion: {
           latitude: location.coords.latitude,
@@ -97,6 +113,9 @@ export default class mapScreen extends Component {
       alert("Location permission not granted");
     }
   }
+  
+
+  
 
     render() {
         return (
@@ -116,19 +135,23 @@ export default class mapScreen extends Component {
                 </MapView>
                 
                 <View style={styles.infoWrapper}>
-                    <RunInfoNumeric title="Distance" unit="km"
+                    <RunInfoNumeric title="Distance" unit="m"
                       ref={(info) => this.distanceInfo = info}
                     />
                     <RunInfoNumeric title="Speed" unit="km/h" 
                       ref={(info) => this.speedInfo = info}  
-                      />
+                    />
                     <RunInfo title="Direction" 
                       value="NE"
                       ref={(info) => this.directionInfo = info}  
                     />
                 </View>
+
             </View>
+
+
             );
+
     }
 }
 
