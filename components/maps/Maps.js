@@ -1,5 +1,5 @@
 import React, {Component, useState, useEffect} from 'react';
-import { StyleSheet, Button, Text, View, Dimensions} from 'react-native';
+import { StyleSheet, Button, Text, View, Dimensions, TouchableOpacity} from 'react-native';
 
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import haversine from 'haversine';
@@ -18,7 +18,6 @@ export default class mapScreen extends Component {
         mapRegion: null,
         hasLocationPermissions: false,
         locationResult: null,
-        selectedTab: '',
     };
 
 
@@ -120,6 +119,14 @@ export default class mapScreen extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
+              <View style={styles.topBar}>
+              
+                <TouchableOpacity style={styles.root} onPress={() => this.props.navigation.navigate('Home')} >
+                  <Text>beëindig reis</Text>
+                </TouchableOpacity>
+              </View>
+              
+
                 <MapView
                   style={styles.mapStyle}
                   region={this.state.mapRegion}
@@ -128,11 +135,13 @@ export default class mapScreen extends Component {
 
                   onRegionChange={(region) => this.addMarker(region)}
                   >
-                      <Polyline
+                    <Polyline
                       coordinates={this.state.markers.map((marker) => marker.coordinate)}
                       strokeWidth={5}
-                      />
+                    />
                 </MapView>
+
+                
                 
                 <View style={styles.infoWrapper}>
                     <RunInfoNumeric title="Distance" unit="m"
@@ -155,12 +164,6 @@ export default class mapScreen extends Component {
     }
 }
 
-
-
-
-
-
-
 const styles = StyleSheet.create({
   infoWrapper: {
     position: 'absolute',
@@ -174,4 +177,19 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
   },
+  root: {
+    paddingTop: 15,
+    position: 'absolute',
+    flex: 1
+  },
+  topBar: {
+    alignSelf: 'stretch',
+    flexDirection: 'column',
+    height: 52,
+    backgroundColor: '#7B8CDE',
+    alignItems: 'center',
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 15
+  }
 });

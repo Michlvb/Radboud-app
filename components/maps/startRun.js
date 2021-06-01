@@ -10,7 +10,7 @@ export default class EmptyScreen extends React.Component {
         return (
             <View style={{flex: 1}}>
                 <View style={{justifyContent: 'center', height: '100%'}}>
-                    <Text style={{alignSelf: 'center'}}>Ready to go to the RadboudUMC?</Text>
+                    <Text style={{alignSelf: 'center'}}>Klaar om te fietsen naar het RadboudUMC?</Text>
                     <TouchableOpacity style={styles.root} onPress={() => props.navigation.navigate('Maps')} >
                     </TouchableOpacity>
 
