@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { SafeAreaView, StyleSheet, View, StatusBar, TextInput, Text, Button} from "react-native";
 import {AddUser} from '../firebase/firebase.utils'
-import storeData from '../localstorage/LocalStorage'
 import {Picker} from '@react-native-picker/picker'
 
 

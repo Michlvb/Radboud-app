@@ -1,30 +1,41 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, StatusBar, SafeAreaView } from 'react-native'
 import Navbar from '../navbar/Navbar'
 import ShowActivity from './Activities'
 import Header from './Header'
+import {getData} from '../localstorage/LocalStorage'
 
-export default class Home extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            username: this.props.name,
-            department:  this.props.dep,
-            score: this.props.score
-        }
-    }
+export const Home = (props) => {
+
+    const [username, setName] = useState(null)
+    const [department, setDepartment] = useState(null)
+    let [score, setScore] = useState(null)
     
-    render()
-    {
-        return (
-            <SafeAreaView style={styles.container}>
-                <Header username={this.state.username}/>
-                <ShowActivity />
-                <Navbar navigation={this.props.navigation}/>
-            </SafeAreaView>
-        )
-    };
-}
+    //Find a more efficient way...
+    useEffect(() => {
+        if(!props.name) {
+        const fetchData = async () => {
+            const data = await getData()
+            setName(data[0])
+            setDepartment(data[1])
+            setScore(data[2])
+        }
+            fetchData()
+        } else {
+            setName(props.name)
+            setDepartment(props.dep)
+            setScore(props.score)
+        }
+    })
+    
+    return (
+        <SafeAreaView style={styles.container}>
+            <Header username={username}/>
+            <ShowActivity />
+            <Navbar navigation={props.navigation}/>
+        </SafeAreaView>
+    )
+};
 const styles = StyleSheet.create({
       container: {
         flex: 1,
@@ -34,3 +45,5 @@ const styles = StyleSheet.create({
         paddingRight: 10,
   },
 })
+
+export default Home;

@@ -15,11 +15,11 @@ export const getData = async () => {
     }
 }
 
-export const storeData = async (name, department, score) => {
+export const storeData = async (name, department) => {
     try {
         await AsyncStorage.setItem("@key", name);
         await AsyncStorage.setItem("@value", department);
-        await AsyncStorage.setItem("@score", score);
+        await AsyncStorage.setItem("@score", '0');
         console.log("Done");
     } catch (e){
         console.log("error: ", e);

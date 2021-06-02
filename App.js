@@ -25,7 +25,7 @@ function LoginScreen({navigation}){
     }
     fetchData()
   }, [])
-
+  
   return (
     user == null ? 
     <SafeAreaView style={styles.container}>
