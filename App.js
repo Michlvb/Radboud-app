@@ -11,6 +11,8 @@ import Home from './components/main page/Home'
 import MapScreen from './components/maps/Maps'
 import {getData, removeItem} from './components/localstorage/LocalStorage'
 
+import mapScreen from './components/maps/Maps'
+import EmptyScreen from './components/maps/startRun'
 
 const Stack = createStackNavigator();
 
@@ -46,7 +48,9 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Camera" component={CameraComp} />
-        <Stack.Screen name="Maps" component={MapScreen} />
+        <Stack.Screen name="Maps" component={mapScreen} />
+        <Stack.Screen name="EmptyMap" component={EmptyScreen} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
