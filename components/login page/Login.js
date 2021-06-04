@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { SafeAreaView, StyleSheet, View, StatusBar, TextInput, Text, Button} from "react-native";
+import { SafeAreaView, StyleSheet, View, StatusBar, TextInput, Text, Button, Platform} from "react-native";
 import {AddUser} from '../firebase/firebase.utils'
 import {Picker} from '@react-native-picker/picker'
 
@@ -27,6 +27,7 @@ export default function Login(props){
                 <TextInput style={styles.input} onChangeText={(text) => setName(text.toLowerCase())} ></TextInput>
                 <Text style={styles.text}>Afdeling</Text>
                 <Picker
+                style={styles.picker}
                 selectedValue={department}
                 onValueChange={(item) => setDepartment(item)}
                 >
@@ -63,14 +64,20 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginBottom: 5,
         justifyContent: 'center'
-  },
+    },
     input: {
         backgroundColor: 'white',
         height: 40,
         margin: 12,
         borderWidth: 1,
-  },
-  text: {
+    },
+    text: {
         marginLeft: 12
-  }
+    },
+    picker: {
+        marginBottom: Platform.OS === "android" ? 100 : 0,
+        height: Platform.OS === "android" ? 50 : 0,
+        width: Platform.OS === "android" ? 250 : 0,
+        backgroundColor: Platform.OS === "android" ? "blue" : "white"
+    }
 })
