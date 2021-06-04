@@ -1,38 +1,53 @@
-import React, {Component, setState} from 'react';
-import { SafeAreaView, StyleSheet, View, StatusBar, TextInput, Text, Button } from "react-native";
+import React, {useState} from 'react';
+import { SafeAreaView, StyleSheet, View, StatusBar, TextInput, Text, Button, Platform} from "react-native";
 import {AddUser} from '../firebase/firebase.utils'
+import {Picker} from '@react-native-picker/picker'
 
-export default class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: "",
-            department: ""
-        };
-    }
-    render() {
-        return (
-            <SafeAreaView style={styles.container}>
-                <View style={styles.mainPage}>
-                    <Text style={styles.text}>Gebruikersnaam</Text>
-                    <TextInput style={styles.input} onChangeText={(text) => this.setState({...this, username: text.toLowerCase()})} ></TextInput>
-                    <Text style={styles.text}>Afdeling</Text>
-                    <TextInput style={styles.input} onChangeText={(text) => this.setState({...this, department: text.toLowerCase()})}></TextInput>
-                    <Button 
-                    title="Submit" 
-                    onPress={() => 
-                        AddUser(this.state.username, this.state.department)
-                        .then((answer) => {
-                            if(answer) this.props.navigation.navigate('Home')
-                            else console.log(answer)
-                        }
-                        )
-                        }>
-                    </Button>
-                </View>
-            </SafeAreaView>
-        );
-    }
+
+export default function Login(props){
+    
+    const [name, setName] = useState("");
+    const [department, setDepartment] = useState("");
+    const departments = ["Anatomie", "Anesthesiologie, Pijn en Palliatieve Geneeskunde", "Apotheek", "Cardiologie", 
+                        "Cardio-thoracale Chirurgie", "Chirurgische Dagbehandeling", "Cognitive Neuroscience",
+                        "Dermatologie", "Eerstelijnsgeneeskunde", "Fysiologie", "Fysiotherapie", "Geestelijke verzorging en Pastoraat",
+                        "Genetica", "Geriatrie", "Health Evidence", "Heelkunde", "Hematologie", "Intensive Care", "Interne Geneeskunde",
+                        "IQ healthcare", "Keel-Neus-Oorheelkunde", "Laboratorium-geneeskunde", "Longziekten", "Maag-, Darm- en Leverziekten",
+                        "Medische Microbiologie", "Medische Oncologie", "Medische Psychologie", "Mobiel Medisch Team", "Mond-Kaak-Aangezichts-chirurgie",
+                        "Mortuarium", "Neonatologie", "Neurochirurgie", "Neurologie", "Nierziekten", "Oogheelkunde", "Operatiekamers", "Orthopedie", "Pathologie",
+                        "Plastische Chirurgie", "Psychiatrie", "Radiologie en Nucleaire Geneeskunde", "Radiotherapie", "Reumatische Ziekten", "Revalidatie", "Spoedeisende Hulp",
+                        "Tandheelkunde", "Urologie", "Verloskunde en Gynaecologie"]
+
+                        
+    return (
+        
+        <SafeAreaView style={styles.container}>
+            <View style={styles.mainPage}>
+                <Text style={styles.text}>Gebruikersnaam</Text>
+                <TextInput style={styles.input} onChangeText={(text) => setName(text.toLowerCase())} ></TextInput>
+                <Text style={styles.text}>Afdeling</Text>
+                <Picker
+                style={styles.picker}
+                selectedValue={department}
+                onValueChange={(item) => setDepartment(item)}
+                >
+                {departments.map((val, index) => {
+                    return <Picker.Item label={val} key={index} value={val}/>
+                })}
+                </Picker>
+                <Button 
+                title="Submit" 
+                onPress={() => 
+                    AddUser(name, department)
+                    .then((answer) => {
+                        if(answer) props.navigation.navigate('Home')
+                        else console.log(answer)
+                    })
+                    }>
+                </Button>
+            </View>
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -49,14 +64,20 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginBottom: 5,
         justifyContent: 'center'
-  },
+    },
     input: {
         backgroundColor: 'white',
         height: 40,
         margin: 12,
         borderWidth: 1,
-  },
-  text: {
+    },
+    text: {
         marginLeft: 12
-  }
+    },
+    picker: {
+        marginBottom: Platform.OS === "android" ? 100 : 0,
+        height: Platform.OS === "android" ? 50 : 0,
+        width: Platform.OS === "android" ? 250 : 0,
+        backgroundColor: Platform.OS === "android" ? "blue" : "white"
+    }
 })

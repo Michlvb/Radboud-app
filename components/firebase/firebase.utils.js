@@ -2,9 +2,11 @@ import React from 'react';
 import firebase from 'firebase/app'
 import "firebase/database";
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import storeData from '../localstorage/LocalStorage'
 
-// Optionally import the services that you want to use
-// import "firebase/auth";
+//Optionally import the services that you want to use
+//import "firebase/auth";
 //import "firebase/firestore";
 //import "firebase/functions";
 //import "firebase/storage";
@@ -20,7 +22,7 @@ const firebaseConfig = {
   };
 
 //Get users from certain department in database
-const getUsersFromDepartment = async (department) => {
+export const getUsersFromDepartment = async (department) => {
   try {
     var users = database.ref('department/' + department).once('value').then(snapshot => {
       var items = []
@@ -47,16 +49,16 @@ export const AddUser = async (username, department) => {
       return;
     }
   })
-
   try{
     database
     .ref('department/' + department.toLowerCase() +'/'+username.toLowerCase())
     .set({score: 0})
+    storeData(username, department, 0);
     Alert.alert("You account has been made!")
   } catch (error) {
     console.log('User not added: ', error.message)
   }
-  return true;
+  return username;
 }
 
 if (!firebase.apps.length) {
