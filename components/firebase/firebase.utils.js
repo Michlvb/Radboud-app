@@ -42,24 +42,24 @@ export const AddUser = async (username, department) => {
   if(!username || !department) return;
 
   const users = await getUsersFromDepartment(department)
-
-  users.map((name) => {
-    if(name == username){
+  
+  for(var i = 0; i < users.length; i++)
+    if(users[i] == username){
       Alert.alert("Username already taken. Please enter a different one.");
-      return;
+      return false;
     }
-  })
+
   try{
-    database
-    .ref('department/' + department.toLowerCase() +'/'+username.toLowerCase())
-    .set({score: 0})
-    storeData(username, department, 0);
-    Alert.alert("You account has been made!")
-  } catch (error) {
-    console.log('User not added: ', error.message)
+      database
+      .ref('department/' + department.toLowerCase() +'/'+username.toLowerCase())
+      .set({score: 0, total_distance: 0, last_distance: 0, total_co2: 0})
+      storeData(username, department, 0);
+      Alert.alert("You account has been made!")
+    } catch (error) {
+      console.log('User not added: ', error.message)
+    }
+    return username;
   }
-  return username;
-}
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);

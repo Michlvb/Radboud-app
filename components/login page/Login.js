@@ -36,9 +36,9 @@ export default function Login(props){
                 })}
                 </Picker>
                 <Button 
-                title="Submit" 
+                title="Submit"
                 onPress={() => 
-                    AddUser(name, department)
+                    AddUser(name, department.toLowerCase())
                     .then((answer) => {
                         if(answer) props.navigation.navigate('Home')
                         else console.log(answer)
@@ -74,10 +74,17 @@ const styles = StyleSheet.create({
     text: {
         marginLeft: 12
     },
+    submit: {
+        position: 'absolute',
+        bottom: 10,
+        left: 0,
+    },
     picker: {
-        marginBottom: Platform.OS === "android" ? 100 : 0,
-        height: Platform.OS === "android" ? 50 : 0,
-        width: Platform.OS === "android" ? 250 : 0,
-        backgroundColor: Platform.OS === "android" ? "blue" : "white"
+        marginBottom: Platform.OS === "android" ? 100 : 170,
+        marginTop: Platform.OS === "android" ? 100 : -10,
+        marginLeft:Platform.OS === "android" ? 100 : 50,
+        height: Platform.OS === "android" ? 50 : 50,
+        width: Platform.OS === "android" ? 250 : 250,
+        backgroundColor: Platform.OS === "android" ? "blue" : 'transparent'
     }
 })
