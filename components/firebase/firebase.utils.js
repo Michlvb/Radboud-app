@@ -21,10 +21,22 @@ const firebaseConfig = {
     messagingSenderId: '640989795548'
   };
 
+
+export const getActivity = async (user,department) => {
+  try {
+    var users = await database.ref('department/'+department+"/"+user).once('value').then(snapshot => {
+      return snapshot.val().activity;
+    })
+    return users
+  }catch (error) {
+    console.log("Error while fetching user data: ", error.message)
+  } 
+}
+
 //Get users from certain department in database
 export const getUsersFromDepartment = async (department) => {
   try {
-    var users = database.ref('department/' + department).once('value').then(snapshot => {
+    var users = await database.ref('department/' + department).once('value').then(snapshot => {
       var items = []
       snapshot.forEach((child) => {
         items.push(child.key)
@@ -52,7 +64,7 @@ export const AddUser = async (username, department) => {
   try{
       database
       .ref('department/' + department.toLowerCase() +'/'+username.toLowerCase())
-      .set({score: 0, total_distance: 0, last_distance: 0, total_co2: 0})
+      .set({score: 0, total_distance: 0, last_distance: 0, total_co2: 0, activity:[{id:0, msg: "no activity yet."},{id: 1, msg: 'no activity yet'}]})
       storeData(username, department, 0);
       Alert.alert("You account has been made!")
     } catch (error) {

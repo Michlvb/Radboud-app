@@ -1,28 +1,47 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { render } from 'react-dom';
 import { StyleSheet, Text, View, FlatList} from 'react-native';
+import {getActivity} from '../firebase/firebase.utils'
 
-
-export default function ShowActivity (){
-    const listOfActivities = [{id: "1", title:"Fietsen", text: "Goedzo! Je hebt vandaag de fiets gepakt in plaats van de auto"},
-                              {id: "2", title:"Afval", text: "Klik, met de camera heb je iets juist weg gegooid. Dat kan nu mooi gerecyled worden."},
-                              {id: "3", title:"Scorebord", text: "Goed bezig! Je staat op plek 3 van alle medewerkers van jouw afdeling!"}] //Eventually, get this from a db
-    //listOfActivities is a dictionary/object
+export default function ShowActivity (props){
     
-    return (
-        <View style={styles.screen}>
-            <Text style={styles.text}>Activiteiten</Text>
-            <View>
-                <FlatList 
-                    data={listOfActivities} 
-                    renderItem={itemData => (
-                        <View style={styles.listItem}>
-                            <Text>{itemData.item.title}</Text>
-                            <Text>{'\n' + itemData.item.text}</Text>
-                        </View>
-                    )}/>
+
+    const [listOfActivities, setList] = useState()
+    
+    useEffect(() => {
+        const fetchData = async () =>{
+            const data = await getActivity(props.name,props.dep)
+            setList(data)
+          }
+          fetchData()
+    }, [])
+
+
+    if(listOfActivities == null){
+        return (
+            <View style={styles.screen}>
+                <Text>Loading</Text>
             </View>
-        </View>
-    )
+        )
+    } else {
+        return (
+            <View style={styles.screen}>
+                <Text style={styles.text}>Activiteiten</Text>
+                <View>
+                    <FlatList 
+                        data={listOfActivities} 
+                        keyExtractor={(item, index) => item.key}
+                        renderItem={({item}) => (
+                            <View style={styles.listItem}>
+                                <Text>{item.msg}</Text>
+                                <Text>{'\n' + item.msg}</Text>
+                            </View>
+                        )}
+                        />
+                </View>
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -38,10 +57,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         shadowColor: "#000000",
-        shadowOpacity: 0.3
+        shadowOpacity: 0.3,
+        color: 'blue'
     },
     text: {
         fontWeight: 'bold',
-
     }
 })
