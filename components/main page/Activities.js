@@ -5,19 +5,7 @@ import {getActivity} from '../firebase/firebase.utils'
 
 export default function ShowActivity (props){
     
-
-    const [listOfActivities, setList] = useState()
-    
-    useEffect(() => {
-        const fetchData = async () =>{
-            const data = await getActivity(props.name,props.dep)
-            setList(data)
-          }
-          fetchData()
-    }, [])
-
-
-    if(listOfActivities == null){
+    if(props.activity == null){
         return (
             <View style={styles.screen}>
                 <Text>Loading</Text>
@@ -29,11 +17,11 @@ export default function ShowActivity (props){
                 <Text style={styles.text}>Activiteiten</Text>
                 <View>
                     <FlatList 
-                        data={listOfActivities} 
-                        keyExtractor={(item, index) => item.key}
+                        data={props.activity} 
+                        keyExtractor={(item) => item.key}
                         renderItem={({item}) => (
                             <View style={styles.listItem}>
-                                <Text>{item.msg}</Text>
+                                <Text>{item.id}</Text>
                                 <Text>{'\n' + item.msg}</Text>
                             </View>
                         )}

@@ -22,16 +22,16 @@ const firebaseConfig = {
   };
 
 
-export const getActivity = async (user,department) => {
-  try {
-    var users = await database.ref('department/'+department+"/"+user).once('value').then(snapshot => {
-      return snapshot.val().activity;
-    })
-    return users
-  }catch (error) {
-    console.log("Error while fetching user data: ", error.message)
-  } 
-}
+// export const getActivity = async (user,department) => {
+//   try {
+//     var users = await database.ref('department/'+department+"/"+user).once('value').then(snapshot => {
+//       return snapshot.val().activity;
+//     })
+//     return users
+//   }catch (error) {
+//     console.log("Error while fetching user data: ", error.message)
+//   } 
+// }
 
 //Get users from certain department in database
 export const getUsersFromDepartment = async (department) => {
@@ -47,6 +47,33 @@ export const getUsersFromDepartment = async (department) => {
   } catch (error) {
     console.log("Error while fetching user data: ", error.message)
   }
+}
+
+export const getUserFromDepartment = async (username, department) => {
+  try{ 
+    var uRef = database.ref('department/'+department+'/'+username)
+    const user = await uRef.get()
+    return user
+  } catch (error) {
+    console.log("Error while fetching user data: ", error.message)
+  }
+}
+
+export const updateUser = async (user, dep, last_distance, score, total_co2, total_distance, activity) => {
+  var uRef = database.ref('department/'+dep+'/'+user)
+  try {
+    await uRef.set({
+      activity,
+      last_distance,
+      score,
+      total_co2,
+      total_distance
+    })
+
+  } catch (error) {
+    console.log("Error Updating user info " + error.message);
+  }
+
 }
 
 //Add user to database
