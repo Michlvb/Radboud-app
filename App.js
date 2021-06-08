@@ -14,6 +14,8 @@ import {getData, removeItem} from './components/localstorage/LocalStorage'
 import mapScreen from './components/maps/Maps'
 import EmptyScreen from './components/maps/startRun'
 
+import TreesAndCo2 from './components/co2tracker/treesAndCo2'
+
 const Stack = createStackNavigator();
 
 
@@ -50,6 +52,7 @@ export default function App() {
         <Stack.Screen name="Camera" component={CameraComp} />
         <Stack.Screen name="Maps" component={mapScreen} />
         <Stack.Screen name="EmptyMap" component={EmptyScreen} />
+        <Stack.Screen name="Saved Emissions" component={TreesAndCo2} />
         
       </Stack.Navigator>
     </NavigationContainer>
