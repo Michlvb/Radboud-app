@@ -4,13 +4,18 @@ import Navbar from '../navbar/Navbar'
 import ShowActivity from './Activities'
 import Header from './Header'
 import {getData} from '../localstorage/LocalStorage'
+import {getUserFromDepartment} from '../firebase/firebase.utils'
 
 export const Home = (props) => {
 
-    const [username, setName] = useState(null)
-    const [department, setDepartment] = useState(null)
+    const [username, setName] = useState(props.name)
+    const [department, setDepartment] = useState(props.dep)
+
     let [score, setScore] = useState(null)
-    
+    let [last_distance, setLDistance] = useState(null)
+    let [total_co2, setCO2] = useState(null)
+    let [total_distance, setTDistance] = useState(null)
+    let [activity, setActivity] = useState(null)
     //Find a more efficient way...
     useEffect(() => {
         if(!props.name) {
@@ -18,20 +23,25 @@ export const Home = (props) => {
             const data = await getData()
             setName(data[0])
             setDepartment(data[1])
-            setScore(data[2])
         }
             fetchData()
-        } else {
-            setName(props.name)
-            setDepartment(props.dep)
-            setScore(props.score)
         }
-    })
+        const setValues = async () => {
+            const data = await getUserFromDepartment(username, department)
+            let {last_distance, score, total_co2, total_distance, activity} = data.val()
+            setScore(score);
+            setLDistance(last_distance)
+            setCO2(total_co2)
+            setTDistance(total_distance)
+            setActivity(activity)
+        }
+        setValues()
+    }, [])
     
     return (
         <SafeAreaView style={styles.container}>
             <Header username={username}/>
-            <ShowActivity />
+            <ShowActivity activity={activity}/>
             <Navbar navigation={props.navigation}/>
         </SafeAreaView>
     )

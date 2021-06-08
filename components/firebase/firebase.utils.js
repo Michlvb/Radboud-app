@@ -21,10 +21,22 @@ const firebaseConfig = {
     messagingSenderId: '640989795548'
   };
 
+
+// export const getActivity = async (user,department) => {
+//   try {
+//     var users = await database.ref('department/'+department+"/"+user).once('value').then(snapshot => {
+//       return snapshot.val().activity;
+//     })
+//     return users
+//   }catch (error) {
+//     console.log("Error while fetching user data: ", error.message)
+//   } 
+// }
+
 //Get users from certain department in database
 export const getUsersFromDepartment = async (department) => {
   try {
-    var users = database.ref('department/' + department).once('value').then(snapshot => {
+    var users = await database.ref('department/' + department).once('value').then(snapshot => {
       var items = []
       snapshot.forEach((child) => {
         items.push(child.key)
@@ -37,29 +49,56 @@ export const getUsersFromDepartment = async (department) => {
   }
 }
 
+export const getUserFromDepartment = async (username, department) => {
+  try{ 
+    var uRef = database.ref('department/'+department+'/'+username)
+    const user = await uRef.get()
+    return user
+  } catch (error) {
+    console.log("Error while fetching user data: ", error.message)
+  }
+}
+
+export const updateUser = async (user, dep, last_distance, score, total_co2, total_distance, activity) => {
+  var uRef = database.ref('department/'+dep+'/'+user)
+  try {
+    await uRef.set({
+      activity,
+      last_distance,
+      score,
+      total_co2,
+      total_distance
+    })
+
+  } catch (error) {
+    console.log("Error Updating user info " + error.message);
+  }
+
+}
+
 //Add user to database
 export const AddUser = async (username, department) => {
   if(!username || !department) return;
 
   const users = await getUsersFromDepartment(department)
-
-  users.map((name) => {
-    if(name == username){
+  
+  for(var i = 0; i < users.length; i++)
+    if(users[i] == username){
       Alert.alert("Username already taken. Please enter a different one.");
-      return;
+      return false;
     }
-  })
+
   try{
-    database
-    .ref('department/' + department.toLowerCase() +'/'+username.toLowerCase())
-    .set({score: 0})
-    storeData(username, department, 0);
-    Alert.alert("You account has been made!")
-  } catch (error) {
-    console.log('User not added: ', error.message)
+      database
+      .ref('department/' + department.toLowerCase() +'/'+username.toLowerCase())
+      .set({score: 0, total_distance: 0, last_distance: 0, total_co2: 0, activity:[{id:0, msg: "no activity yet."},{id: 1, msg: 'no activity yet'}]})
+      storeData(username, department, 0);
+      Alert.alert("You account has been made!")
+    } catch (error) {
+      console.log('User not added: ', error.message)
+    }
+    return username;
   }
-  return username;
-}
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);

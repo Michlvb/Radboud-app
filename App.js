@@ -10,9 +10,9 @@ import CameraComp from './components/Camera'
 import Home from './components/main page/Home'
 import MapScreen from './components/maps/Maps'
 import {getData, removeItem} from './components/localstorage/LocalStorage'
-
 import mapScreen from './components/maps/Maps'
 import EmptyScreen from './components/maps/startRun'
+
 
 const Stack = createStackNavigator();
 
@@ -27,7 +27,8 @@ function LoginScreen({navigation}){
     }
     fetchData()
   }, [])
-  
+ 
+
   return (
     user == null ? 
     <SafeAreaView style={styles.container}>
