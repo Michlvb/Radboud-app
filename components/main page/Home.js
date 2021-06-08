@@ -16,6 +16,7 @@ export const Home = (props) => {
     let [total_co2, setCO2] = useState(null)
     let [total_distance, setTDistance] = useState(null)
     let [activity, setActivity] = useState(null)
+    
     //Find a more efficient way...
     useEffect(() => {
         if(!props.name) {
@@ -37,12 +38,18 @@ export const Home = (props) => {
         }
         setValues()
     }, [])
+
+    //Error
+    //Scorebord
+    //CO2
+    //Punten convert
+
     
     return (
         <SafeAreaView style={styles.container}>
             <Header username={username}/>
             <ShowActivity activity={activity}/>
-            <Navbar navigation={props.navigation}/>
+            <Navbar navigation={props.navigation} name={username} dep={department}/>
         </SafeAreaView>
     )
 };

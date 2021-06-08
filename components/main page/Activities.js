@@ -18,10 +18,13 @@ export default function ShowActivity (props){
                 <View>
                     <FlatList 
                         data={props.activity} 
-                        keyExtractor={(item) => item.key}
+                        keyExtractor={(item,index) => {return item.id}}
                         renderItem={({item}) => (
                             <View style={styles.listItem}>
-                                <Text>{item.id}</Text>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <Text>{item.id}</Text> 
+                                    <Text>{item.date}</Text>
+                                </View>
                                 <Text>{'\n' + item.msg}</Text>
                             </View>
                         )}

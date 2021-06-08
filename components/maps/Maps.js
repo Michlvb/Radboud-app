@@ -9,33 +9,35 @@ import RunInfoNumeric from './run-info-numeric';
 
 import * as Location from 'expo-location';
 
+import {updateDistance} from '../firebase/firebase.utils'
+
 let id = 0;
 
 export default class mapScreen extends Component {
+  _IsMounted = false
   constructor(props) {
     super(props);
     this.state = {markers: [],
         mapRegion: null,
         hasLocationPermissions: false,
         locationResult: null,
+        name: this.props.route.params.name,
+        dep: this.props.route.params.dep
     };
-
-
 
     let watchID = Location.watchPositionAsync(
       { accuracy: 6, timeInterval: 500, distanceInterval: 0 },
       (locationResult) => {
         let distance = 0;
 
-
         if (locationResult.coords.speed <= 26){
           if (this.state.previousCoordinate) {
             distance = this.state.distance + haversine(this.state.previousCoordinate, locationResult.coords, {unit: 'meter'});
-            this.distanceInfo.setState({ value: distance});
+            this.distanceInfo === null ? null : this.distanceInfo.setState({ value: distance});
           }
         }
 
-        this.speedInfo.setState({value: locationResult.coords.speed});
+        this.speedInfo === null ? null : this.speedInfo.setState({value: locationResult.coords.speed});
 
         let x = locationResult.coords.heading;
         if ((x > 0 && x <= 23) || (x > 338 && x <= 360))
@@ -63,8 +65,6 @@ export default class mapScreen extends Component {
     );
   }
 
-    
-
     addMarker(region){
       let now = (new Date).getTime();
       if (this.state.ladAddedMarker > now - 5000){
@@ -84,16 +84,19 @@ export default class mapScreen extends Component {
   
 
   componentDidMount() {
-    this.getLocationAsync();
+    this.getLocationAsync()
   }
 
+  componentWillUnmount(){
+    this._IsMounted = false
+  }
   
 
   handleMapRegionChange = (mapRegion) => {
     this.setState({ mapRegion });
   };
   
-
+  
   async getLocationAsync() {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status === "granted") {
@@ -113,20 +116,15 @@ export default class mapScreen extends Component {
     }
   }
   
-
-  
-
     render() {
         return (
             <View style={{flex: 1}}>
               <View style={styles.topBar}>
               
-                <TouchableOpacity style={styles.root} onPress={() => this.props.navigation.navigate('Home')} >
+                <TouchableOpacity style={styles.root} onPress={() => updateDistance(this.state.name, this.state.dep, this.state.distance).then(this.props.navigation.popToTop())} >
                   <Text>beëindig reis</Text>
                 </TouchableOpacity>
               </View>
-              
-
                 <MapView
                   style={styles.mapStyle}
                   region={this.state.mapRegion}
