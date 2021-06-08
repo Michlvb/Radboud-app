@@ -14,6 +14,8 @@ class Navbar extends Component {
                 <NavButton icon="bicycle" navigation={this.props.navigation}/>
                 <NavButton icon="camera" navigation={this.props.navigation}/>
                 <NavButton icon="molecule-co2" navigation={this.props.navigation}/>
+                <NavButton icon="score" navigation={this.props.navigation}/>
+
             </View>
         );
     }
