@@ -1,6 +1,5 @@
 import React, {Component, useState, useEffect} from 'react';
 import { StyleSheet, Button, Text, View, Dimensions, TouchableOpacity} from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import haversine from 'haversine';
@@ -20,7 +19,58 @@ export default class mapScreen extends Component {
         hasLocationPermissions: false,
         locationResult: null,
     };
-      let watchID = Location.watchPositionAsync(
+  }
+
+    
+
+    addMarker(region){
+      let now = (new Date).getTime();
+      if (this.state.ladAddedMarker > now - 5000){
+        return;
+      }
+
+      this.setState({
+        markers: [
+          ...this.state.markers, {
+            coordinate: region,
+            key: id++
+          }
+        ],
+        ladAddedMarker: now,
+      });
+    }
+  
+
+  componentDidMount() {
+    this.getLocationAsync();
+  }
+
+  componentWillUnmount() {
+    //this.watchID.remove();
+    console.log("component willunmount and removed watchid")
+  }
+  
+
+  handleMapRegionChange = (mapRegion) => {
+    this.setState({ mapRegion });
+  };
+  
+
+  async getLocationAsync() {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status === "granted") {
+      this.setState({ hasLocationPermissions: true });
+      const location = await Location.getCurrentPositionAsync({});
+      this.setState({ locationResult: location});
+      this.setState({
+        mapRegion: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.002,
+          longitudeDelta: 0.002,
+        },
+      });
+      this.watchID = await Location.watchPositionAsync(
         { accuracy: 6, timeInterval: 500, distanceInterval: 0 },
         (locationResult) => {
           let distance = 0;
@@ -59,51 +109,6 @@ export default class mapScreen extends Component {
           })
         }
       );
-  }
-
-    
-
-    addMarker(region){
-      let now = (new Date).getTime();
-      if (this.state.ladAddedMarker > now - 5000){
-        return;
-      }
-
-      this.setState({
-        markers: [
-          ...this.state.markers, {
-            coordinate: region,
-            key: id++
-          }
-        ],
-        ladAddedMarker: now,
-      });
-    }
-  
-
-  componentDidMount() {
-    this.getLocationAsync();
-  }
-
-  handleMapRegionChange = (mapRegion) => {
-    this.setState({ mapRegion });
-  };
-  
-
-  async getLocationAsync() {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status === "granted") {
-      this.setState({ hasLocationPermissions: true });
-      const location = await Location.getCurrentPositionAsync({});
-      this.setState({ locationResult: location});
-      this.setState({
-        mapRegion: {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          latitudeDelta: 0.002,
-          longitudeDelta: 0.002,
-        },
-      });
     } else {
       alert("Location permission not granted");
     }
