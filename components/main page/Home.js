@@ -6,6 +6,8 @@ import Header from './Header'
 import {getData} from '../localstorage/LocalStorage'
 import {getUserFromDepartment} from '../firebase/firebase.utils'
 
+// import { useFocusEffect } from '@react-navigation/native';
+
 export const Home = (props) => {
 
     const [username, setName] = useState(props.name)
@@ -16,6 +18,8 @@ export const Home = (props) => {
     let [total_co2, setCO2] = useState(null)
     let [total_distance, setTDistance] = useState(null)
     let [activity, setActivity] = useState(null)
+
+    const isFocused = useIsFocused();
     
     //Find a more efficient way...
     useEffect(() => {
@@ -38,11 +42,6 @@ export const Home = (props) => {
         }
         setValues()
     }, [])
-
-    //Error
-    //Scorebord
-    //CO2
-    //Punten convert
 
     return (
         <SafeAreaView style={styles.container}>

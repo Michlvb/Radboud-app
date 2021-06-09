@@ -9,7 +9,7 @@ import RunInfoNumeric from './run-info-numeric';
 
 import * as Location from 'expo-location';
 
-import {updateDistance} from '../firebase/firebase.utils'
+import {UpdateUser} from '../firebase/firebase.utils'
 
 let id = 0;
 
@@ -120,7 +120,7 @@ export default class mapScreen extends Component {
             <View style={{flex: 1}}>
               <View style={styles.topBar}>
               
-                <TouchableOpacity style={styles.root} onPress={() => updateDistance(this.state.name, this.state.dep, this.state.distance).then(this.props.navigation.popToTop())} >
+                <TouchableOpacity style={styles.root} onPress={() => UpdateUser(this.state.name, this.state.dep, this.state.distance).then(this.props.navigation.popToTop())} >
                   <Text>beëindig reis</Text>
                 </TouchableOpacity>
               </View>
