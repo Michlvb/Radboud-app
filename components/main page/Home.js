@@ -19,7 +19,7 @@ export const Home = (props) => {
     let [total_distance, setTDistance] = useState(null)
     let [activity, setActivity] = useState(null)
 
-    const isFocused = useIsFocused();
+    // const isFocused = useIsFocused();
     
     //Find a more efficient way...
     useEffect(() => {

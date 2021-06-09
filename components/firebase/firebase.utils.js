@@ -119,7 +119,7 @@ export const UpdateUser = async (username, department, dist) => {
 export const AddUser = async (username, department) => {
   if(!username || !department) return;
 
-  const users = await getUsersFromDepartment(department)
+  const users = await getAllUsersFromDepartmentsOrDepartment(department)
   
   for(var i = 0; i < users.length; i++)
     if(users[i] == username){
