@@ -1,15 +1,54 @@
 import * as React from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, Switch } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import sharedStyles from '../maps/shared-styles';
 
 export default class TreesAndCo2 extends React.Component {
     constructor(props) {
         super(props);
-        this.trees = 2;
-        this.state = {};
+        this.state = {
+            yearly: false,
+            co2: 0,
+            trees: 0,
+            last_distance: this.props.route.params.lastdist,
+            total_distance: this.props.route.params.totaldist
+        };
+    }
+
+    componentDidMount() {
+        this.distanceToCO2();
     }
     
+    distanceToCO2() {
+        const uitstootAutoKM = 115 //gram/km
+        let afstandKilometer = this.state.total_distance / 1000;
+        let voorkomenCO2Uitstoot = afstandKilometer * uitstootAutoKM;
+        const bomen = voorkomenCO2Uitstoot / 20;
+        this.setState({
+            co2: voorkomenCO2Uitstoot,
+            trees: bomen
+        });
+    }
+
+    CO2ToTrees() {
+        console.log(this.state.co2)
+        const bomen = this.state.co2 / 20;
+        this.setState({
+            trees: bomen
+        });
+    }
+
+    CO2ToDatabase() {
+
+    }
+
+    toggleSwitch() {
+        let nextState = !this.state.yearly;
+        this.setState({
+            yearly: nextState
+        });
+    }
+
     render() {
         return (
             <View style={styles.root}>
@@ -17,14 +56,24 @@ export default class TreesAndCo2 extends React.Component {
                     <Text style={styles.headerText}>Door te fietsen ben je niet alleen gezond bezig, maar ook milieuvriendelijk!</Text>
                     <Text style={styles.headerText}>Een fiets stoot geen CO2 uit, er komt dus minder CO2 in de lucht.</Text>
                     <Text style={styles.headerText}>Bomen filteren de lucht, maar als er minder wordt uitgestoten, hoeven de bomen ook minder te filteren. Bedankt voor je inzet!</Text>
-                    <Text style={styles.headerText, {fontWeight: 'bold'}}>Door met de fiets te gaan heb je ondertussen ook het werk verricht van: </Text>
+                </View>
+                <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                    <Switch 
+                        trackColor={{ false: '#767577', true: '#81b0ff' }}
+                        thumbColor={ this.state.yearly ? 'lightgreen' : '#f4f3f4'}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => this.toggleSwitch()}
+                        value={this.state.yearly}
+                    />
+                    <Text style={{fontSize: 20}}>{this.state.yearly ? "Besparing op jaarbasis" : "Besparing van de laatste rit"}</Text>
                 </View>
                 <View style={styles.middleBox}>
-                <Text style={styles.middleBoxText}>{this.trees}</Text>
+                <Text style={{fontSize: 50}}>{this.state.yearly ? (this.state.trees * 260 * 2) : this.state.trees}</Text>
                 <Image style={styles.treeImage} source={require('../../assets/tree.png')} />
                 </View>
-                <View style={styles.lowerTextBox}>
-                    <Text style={styles.lowerText}>In totaal heb je 180kg CO2 bespaard.</Text>
+                <View style={styles.middleBox}>
+                    <Text style={{fontSize: 50}}>{this.state.yearly ? (this.state.co2 * 260 * 2) : this.state.co2}gr.</Text>
+                    <Image style={styles.treeImage} source={require('../../assets/co2.png')} />
                 </View>
             </View>
         )
@@ -39,17 +88,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     middleBox: {
-        flex: 3,
+        flex: 2,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     },
-    middleBoxText: {
-        fontSize: 200,
-    },
     treeImage: {
-        width: '55%',
-        height: '100%',
+        resizeMode: 'center',
+        width: '40%',
+        height: '40%',
     },
     treesCo2: {
         alignItems: 'center',

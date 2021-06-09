@@ -44,13 +44,12 @@ export const Home = (props) => {
     //CO2
     //Punten convert
 
-    
     return (
         <SafeAreaView style={styles.container}>
             <Header username={username}/>
             <TouchableOpacity></TouchableOpacity>
             <ShowActivity activity={activity}/>
-            <Navbar navigation={props.navigation} name={username} dep={department}/>
+            <Navbar navigation={props.navigation} name={username} dep={department} tdist={total_distance} ldist={last_distance}/>
         </SafeAreaView>
     )
 };
