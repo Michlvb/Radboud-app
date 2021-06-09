@@ -33,11 +33,11 @@ export default class mapScreen extends Component {
         if (locationResult.coords.speed <= 26){
           if (this.state.previousCoordinate) {
             distance = this.state.distance + haversine(this.state.previousCoordinate, locationResult.coords, {unit: 'meter'});
-            this.distanceInfo === null ? null : this.distanceInfo.setState({ value: distance});
+            this.distanceInfo.setState({ value: distance});
           }
         }
 
-        this.speedInfo === null ? null : this.speedInfo.setState({value: locationResult.coords.speed});
+        this.speedInfo.setState({value: locationResult.coords.speed});
 
         let x = locationResult.coords.heading;
         if ((x > 0 && x <= 23) || (x > 338 && x <= 360))
@@ -86,11 +86,6 @@ export default class mapScreen extends Component {
   componentDidMount() {
     this.getLocationAsync()
   }
-
-  componentWillUnmount(){
-    this._IsMounted = false
-  }
-  
 
   handleMapRegionChange = (mapRegion) => {
     this.setState({ mapRegion });

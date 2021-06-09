@@ -36,15 +36,18 @@ const firebaseConfig = {
 //Get users from certain department in database
 export const getUsersFromDepartment = async (department) => {
   try {
-    var users = await database.ref('department/' + department).once('value').then(snapshot => {
-      var items = []
+    var users = await database.ref('department/' + department).get().then((snapshot) => {
+      var check = []
       snapshot.forEach((child) => {
-        items.push(child.key)
-      })    
-      return items;
-    })
-    return users;
-  } catch (error) {
+        const data =  {name:child.key, score:  JSON.stringify(child.val().score)}
+        check.push(data)
+      })
+      return check;
+    })   
+    return users
+    }
+    // return users;
+    catch (error) {
     console.log("Error while fetching user data: ", error.message)
   }
 }

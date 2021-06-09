@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, StyleSheet, StatusBar, SafeAreaView } from 'react-native'
+import { View, StyleSheet, StatusBar, SafeAreaView, TouchableOpacity, Text} from 'react-native'
 import Navbar from '../navbar/Navbar'
 import ShowActivity from './Activities'
 import Header from './Header'
@@ -48,6 +48,7 @@ export const Home = (props) => {
     return (
         <SafeAreaView style={styles.container}>
             <Header username={username}/>
+            <TouchableOpacity></TouchableOpacity>
             <ShowActivity activity={activity}/>
             <Navbar navigation={props.navigation} name={username} dep={department}/>
         </SafeAreaView>
