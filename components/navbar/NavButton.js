@@ -33,7 +33,9 @@ function NavButton(props) {
         );
     } else if (props.icon === "score"){
         return (
-            <TouchableOpacity style={styles.navButton}>
+            <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('Scoreboard', {
+                dep: props.dep
+            })}>
                 <MaterialIcons name={props.icon} size={24} color="black" />
             </TouchableOpacity>
         );

@@ -13,7 +13,7 @@ import {getData, removeItem} from './components/localstorage/LocalStorage'
 import mapScreen from './components/maps/Maps'
 import EmptyScreen from './components/maps/startRun'
 
-import Scorebord from './components/scorebord/Scorebord'
+import showScores from './components/scorebord/Scoreboard'
 import TreesAndCo2 from './components/co2tracker/treesAndCo2'
 
 const Stack = createStackNavigator();
@@ -29,7 +29,6 @@ function LoginScreen({navigation}){
     }
     fetchData()
   }, [])
-  
 
   return (
     user == null ? 
@@ -54,7 +53,7 @@ export default function App() {
         <Stack.Screen name="Maps" component={mapScreen} />
         <Stack.Screen name="EmptyMap" component={EmptyScreen} />
         <Stack.Screen name="Saved Emissions" component={TreesAndCo2} />
-        
+        <Stack.Screen name="Scoreboard" component={showScores} />
       </Stack.Navigator>
     </NavigationContainer>
   );
