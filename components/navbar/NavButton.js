@@ -38,7 +38,6 @@ function NavButton(props) {
             </TouchableOpacity>
         );
     } else {
-        console.log(props.ldist, props.tdist + "navbutton! mf");
         return (
             <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('Saved Emissions', {
                 lastdist: props.ldist,

@@ -47,7 +47,6 @@ export const Home = (props) => {
     return (
         <SafeAreaView style={styles.container}>
             <Header username={username}/>
-            <TouchableOpacity></TouchableOpacity>
             <ShowActivity activity={activity}/>
             <Navbar navigation={props.navigation} name={username} dep={department} tdist={total_distance} ldist={last_distance}/>
         </SafeAreaView>
@@ -56,6 +55,7 @@ export const Home = (props) => {
 const styles = StyleSheet.create({
       container: {
         flex: 1,
+        justifyContent: 'space-between',
         backgroundColor: '#7B8CDE',
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 5 : 0,
         paddingLeft: 10,
