@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, StyleSheet, StatusBar, SafeAreaView } from 'react-native'
+import { View, StyleSheet, StatusBar, SafeAreaView, TouchableOpacity, Text} from 'react-native'
 import Navbar from '../navbar/Navbar'
 import ShowActivity from './Activities'
 import Header from './Header'
@@ -16,6 +16,7 @@ export const Home = (props) => {
     let [total_co2, setCO2] = useState(null)
     let [total_distance, setTDistance] = useState(null)
     let [activity, setActivity] = useState(null)
+    
     //Find a more efficient way...
     useEffect(() => {
         if(!props.name) {
@@ -37,12 +38,19 @@ export const Home = (props) => {
         }
         setValues()
     }, [])
+
+    //Error
+    //Scorebord
+    //CO2
+    //Punten convert
+
     
     return (
         <SafeAreaView style={styles.container}>
             <Header username={username}/>
+            <TouchableOpacity></TouchableOpacity>
             <ShowActivity activity={activity}/>
-            <Navbar navigation={props.navigation}/>
+            <Navbar navigation={props.navigation} name={username} dep={department}/>
         </SafeAreaView>
     )
 };

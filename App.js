@@ -13,6 +13,7 @@ import {getData, removeItem} from './components/localstorage/LocalStorage'
 import mapScreen from './components/maps/Maps'
 import EmptyScreen from './components/maps/startRun'
 
+import Scorebord from './components/scorebord/Scorebord'
 import TreesAndCo2 from './components/co2tracker/treesAndCo2'
 
 const Stack = createStackNavigator();
@@ -28,7 +29,7 @@ function LoginScreen({navigation}){
     }
     fetchData()
   }, [])
- 
+  
 
   return (
     user == null ? 
@@ -47,8 +48,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={LoginScreen} />
+        <Stack.Screen name="Home2" component={Home} />
         <Stack.Screen name="Camera" component={CameraComp} />
         <Stack.Screen name="Maps" component={mapScreen} />
         <Stack.Screen name="EmptyMap" component={EmptyScreen} />

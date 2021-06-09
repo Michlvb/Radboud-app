@@ -9,19 +9,22 @@ import RunInfoNumeric from './run-info-numeric';
 
 import * as Location from 'expo-location';
 
+import {updateDistance} from '../firebase/firebase.utils'
+
 let id = 0;
 
 export default class mapScreen extends Component {
+  _IsMounted = false
   constructor(props) {
     super(props);
     this.state = {markers: [],
         mapRegion: null,
         hasLocationPermissions: false,
         locationResult: null,
+        name: this.props.route.params.name,
+        dep: this.props.route.params.dep
     };
   }
-
-    
 
     addMarker(region){
       let now = (new Date).getTime();
@@ -42,7 +45,7 @@ export default class mapScreen extends Component {
   
 
   componentDidMount() {
-    this.getLocationAsync();
+    this.getLocationAsync()
   }
 
   componentWillUnmount() {
@@ -50,12 +53,11 @@ export default class mapScreen extends Component {
     console.log("component willunmount and removed watchid")
   }
   
-
   handleMapRegionChange = (mapRegion) => {
     this.setState({ mapRegion });
   };
   
-
+  
   async getLocationAsync() {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status === "granted") {
@@ -114,20 +116,15 @@ export default class mapScreen extends Component {
     }
   }
   
-
-  
-
     render() {
         return (
             <View style={{flex: 1}}>
               <View style={styles.topBar}>
               
-                <TouchableOpacity style={styles.root} onPress={() => this.props.navigation.navigate('Home')} >
+                <TouchableOpacity style={styles.root} onPress={() => updateDistance(this.state.name, this.state.dep, this.state.distance).then(this.props.navigation.popToTop())} >
                   <Text>beëindig reis</Text>
                 </TouchableOpacity>
               </View>
-              
-
                 <MapView
                   style={styles.mapStyle}
                   region={this.state.mapRegion}

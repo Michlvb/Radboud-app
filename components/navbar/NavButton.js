@@ -24,7 +24,10 @@ function NavButton(props) {
     } 
     else if (props.icon === "bicycle"){
         return (
-            <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('EmptyMap')} >
+            <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('EmptyMap', {
+                name: props.name,
+                dep: props.dep
+            })} >
                 <Ionicons name={props.icon} size={24} color="black" />
             </TouchableOpacity>
         );

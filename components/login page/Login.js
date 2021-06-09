@@ -6,8 +6,6 @@ import {Picker} from '@react-native-picker/picker'
 
 export default function Login(props){
     
-    const [name, setName] = useState("");
-    const [department, setDepartment] = useState("");
     const departments = ["Anatomie", "Anesthesiologie, Pijn en Palliatieve Geneeskunde", "Apotheek", "Cardiologie", 
                         "Cardio-thoracale Chirurgie", "Chirurgische Dagbehandeling", "Cognitive Neuroscience",
                         "Dermatologie", "Eerstelijnsgeneeskunde", "Fysiologie", "Fysiotherapie", "Geestelijke verzorging en Pastoraat",
@@ -18,6 +16,8 @@ export default function Login(props){
                         "Plastische Chirurgie", "Psychiatrie", "Radiologie en Nucleaire Geneeskunde", "Radiotherapie", "Reumatische Ziekten", "Revalidatie", "Spoedeisende Hulp",
                         "Tandheelkunde", "Urologie", "Verloskunde en Gynaecologie"]
 
+    const [name, setName] = useState("");
+    const [department, setDepartment] = useState(departments[0]);
                         
     return (
         
