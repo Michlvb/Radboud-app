@@ -1,5 +1,6 @@
 import React,  {useState, useEffect}  from 'react';
 import { StyleSheet, Text, View} from 'react-native';
+import { getFontScale } from 'react-native/Libraries/Utilities/PixelRatio';
 
 export default function Header(props){
     const name = props.username
@@ -39,6 +40,8 @@ const styles = StyleSheet.create({
         padding: 30
     },
     header: {
-        color: 'white'
+        fontWeight: 'bold',
+        color: 'black',
+        fontSize: 18
     }
 })
