@@ -23,6 +23,7 @@ export const Home = (props) => {
     
     //Find a more efficient way...
     useEffect(() => {
+        let isActive = true
         if(!props.name) {
         const fetchData = async () => {
             const data = await getData()
@@ -30,18 +31,22 @@ export const Home = (props) => {
             setDepartment(data[1])
         }
             fetchData()
-        }
+        } else {
         const setValues = async () => {
-            const data = await getUserFromDepartment(username, department)
-            let {last_distance, score, total_co2, total_distance, activity} = data.val()
-            setScore(score);
-            setLDistance(last_distance)
-            setCO2(total_co2)
-            setTDistance(total_distance)
-            setActivity(activity)
+            if(isActive){
+                const data = await getUserFromDepartment(username, department)
+                let {last_distance, score, total_co2, total_distance, activity} = data.val()
+                setScore(score);
+                setLDistance(last_distance)
+                setCO2(total_co2)
+                setTDistance(total_distance)
+                setActivity(activity)
+            }
         }
-        setValues()
-    }, [])
+          setValues()
+        }
+        return () => { isActive = false}
+    })
 
     return (
         <SafeAreaView style={styles.container}>
