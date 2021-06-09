@@ -8,7 +8,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 function NavButton(props) {
-    console.log()
     if(props.icon === "home"){
         return (
             <TouchableOpacity style={styles.navButton}>
@@ -41,7 +40,10 @@ function NavButton(props) {
         );
     } else {
         return (
-            <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('Saved Emissions')}>
+            <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('Saved Emissions', {
+                lastdist: props.ldist,
+                totaldist: props.tdist
+            })}>
                 <MaterialCommunityIcons name={props.icon} size={24} color="black" />
             </TouchableOpacity>
         );
