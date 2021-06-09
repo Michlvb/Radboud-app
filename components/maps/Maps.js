@@ -50,7 +50,6 @@ export default class mapScreen extends Component {
 
   componentWillUnmount() {
     this.watchID.remove();
-    console.log("component willunmount and removed watchid")
   }
   
   handleMapRegionChange = (mapRegion) => {

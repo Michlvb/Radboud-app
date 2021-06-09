@@ -112,7 +112,7 @@ export const AddUser = async (username, department) => {
       .ref('department/' + department.toLowerCase() +'/'+username.toLowerCase())
       .set({score: 0, total_distance: 0, last_distance: 0, total_co2: 0, activity:[{id:'Fietsen', date:'None',msg: "no activity yet."},{id: 'Afval', date:'None', msg: 'no activity yet'}, {id: 'Scorebord', date:'None', msg:'no activity yet'}]})
       storeData(username, department, 0);
-      Alert.alert("You account has been made!")
+      Alert.alert("Your account has been made!")
     } catch (error) {
       console.log('User not added: ', error.message)
     }
