@@ -30,6 +30,13 @@ export default class TreesAndCo2 extends React.Component {
         });
     }
 
+    toggleSwitch() {
+        let nextState = !this.state.yearly;
+        this.setState({
+            yearly: nextState
+        });
+    }
+
     render() {
         return (
             <View style={styles.root}>
