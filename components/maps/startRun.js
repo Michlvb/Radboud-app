@@ -11,12 +11,12 @@ export default class EmptyScreen extends React.Component {
             <View style={{flex: 1}}>
                 <View style={{justifyContent: 'center', height: '100%'}}>
                     <Text style={{alignSelf: 'center'}}>Klaar om te fietsen naar het RadboudUMC?</Text>
-                    <TouchableOpacity style={styles.root} onPress={() => props.navigation.navigate('Maps')} >
+                    <TouchableOpacity style={styles.root} onPress={() => props.navigation.push('Maps')} >
                     </TouchableOpacity>
 
                     <Button
                         title="Start trip"
-                        onPress={() => this.props.navigation.navigate('Maps')}
+                        onPress={() => this.props.navigation.push('Maps')}
                     />
                 </View>
             </View>
