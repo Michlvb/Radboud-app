@@ -31,7 +31,6 @@ export default class TreesAndCo2 extends React.Component {
     }
 
     CO2ToTrees() {
-        console.log(this.state.co2)
         const bomen = this.state.co2 / 20;
         this.setState({
             trees: bomen
