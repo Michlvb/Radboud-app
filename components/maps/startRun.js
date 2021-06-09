@@ -10,7 +10,8 @@ export const EmptyScreen = ({route, navigation}) => {
         <View style={{flex: 1}}>
                 <View style={{justifyContent: 'center', height: '100%'}}>
                     <Text style={{alignSelf: 'center'}}>Klaar om te fietsen naar het RadboudUMC?</Text>
-                    <TouchableOpacity style={styles.root} onPress={() => navigation.navigate('Maps')} >
+
+                    <TouchableOpacity style={styles.root} onPress={() => props.navigation.push('Maps')} >
                     </TouchableOpacity>
 
                     <Button
@@ -24,29 +25,6 @@ export const EmptyScreen = ({route, navigation}) => {
         </View>
     )
 }
-// export default class EmptyScreen extends React.Component {
-//     constructor({route},props) {
-//         super(props);
-//     }
-
-//     render() {
-        
-//         return (
-//             <View style={{flex: 1}}>
-//                 <View style={{justifyContent: 'center', height: '100%'}}>
-//                     <Text style={{alignSelf: 'center'}}>Klaar om te fietsen naar het RadboudUMC?</Text>
-//                     <TouchableOpacity style={styles.root} onPress={() => props.navigation.navigate('Maps')} >
-//                     </TouchableOpacity>
-
-//                     <Button
-//                         title="Start trip"
-//                         onPress={() => this.props.navigation.navigate('Maps')}
-//                     />
-//                 </View>
-//             </View>
-//         )
-//     }
-//}
 
 const styles = StyleSheet.create({
     root: {

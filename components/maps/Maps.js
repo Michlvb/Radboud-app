@@ -24,45 +24,6 @@ export default class mapScreen extends Component {
         name: this.props.route.params.name,
         dep: this.props.route.params.dep
     };
-
-    let watchID = Location.watchPositionAsync(
-      { accuracy: 6, timeInterval: 500, distanceInterval: 0 },
-      (locationResult) => {
-        let distance = 0;
-
-        if (locationResult.coords.speed <= 26){
-          if (this.state.previousCoordinate) {
-            distance = this.state.distance + haversine(this.state.previousCoordinate, locationResult.coords, {unit: 'meter'});
-            this.distanceInfo.setState({ value: distance});
-          }
-        }
-
-        this.speedInfo.setState({value: locationResult.coords.speed});
-
-        let x = locationResult.coords.heading;
-        if ((x > 0 && x <= 23) || (x > 338 && x <= 360))
-          this.directionInfo.setState({value: 'N'});
-        else if (x > 23 && x <= 65)
-        this.directionInfo.setState({value: 'NE'});
-        else if (x > 65 && x <= 110)
-        this.directionInfo.setState({value: 'E'});
-        else if (x > 110 && x <= 155)
-        this.directionInfo.setState({value: 'SE'});
-        else if (x > 155 && x <= 203)
-        this.directionInfo.setState({value: 'S'});
-        else if (x > 203 && x <= 248)
-        this.directionInfo.setState({value: 'SW'});
-        else if (x > 248 && x <= 293)
-        this.directionInfo.setState({value: 'W'});
-        else if (x > 293 && x <= 338)
-        this.directionInfo.setState({value: 'NW'});
-
-        this.setState({
-          previousCoordinate: locationResult.coords,
-          distance
-        })
-      }
-    );
   }
 
     addMarker(region){
@@ -87,6 +48,11 @@ export default class mapScreen extends Component {
     this.getLocationAsync()
   }
 
+  componentWillUnmount() {
+    //this.watchID.remove();
+    console.log("component willunmount and removed watchid")
+  }
+  
   handleMapRegionChange = (mapRegion) => {
     this.setState({ mapRegion });
   };
@@ -106,6 +72,45 @@ export default class mapScreen extends Component {
           longitudeDelta: 0.002,
         },
       });
+      this.watchID = await Location.watchPositionAsync(
+        { accuracy: 6, timeInterval: 500, distanceInterval: 0 },
+        (locationResult) => {
+          let distance = 0;
+  
+  
+          if (locationResult.coords.speed <= 26){
+            if (this.state.previousCoordinate) {
+              distance = this.state.distance + haversine(this.state.previousCoordinate, locationResult.coords, {unit: 'meter'});
+              this.distanceInfo.setState({ value: distance});
+            }
+          }
+  
+          this.speedInfo.setState({value: locationResult.coords.speed});
+  
+          let x = locationResult.coords.heading;
+          if ((x > 0 && x <= 23) || (x > 338 && x <= 360))
+            this.directionInfo.setState({value: 'N'});
+          else if (x > 23 && x <= 65)
+          this.directionInfo.setState({value: 'NE'});
+          else if (x > 65 && x <= 110)
+          this.directionInfo.setState({value: 'E'});
+          else if (x > 110 && x <= 155)
+          this.directionInfo.setState({value: 'SE'});
+          else if (x > 155 && x <= 203)
+          this.directionInfo.setState({value: 'S'});
+          else if (x > 203 && x <= 248)
+          this.directionInfo.setState({value: 'SW'});
+          else if (x > 248 && x <= 293)
+          this.directionInfo.setState({value: 'W'});
+          else if (x > 293 && x <= 338)
+          this.directionInfo.setState({value: 'NW'});
+  
+          this.setState({
+            previousCoordinate: locationResult.coords,
+            distance
+          })
+        }
+      );
     } else {
       alert("Location permission not granted");
     }

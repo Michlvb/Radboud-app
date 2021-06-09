@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo, Ionicons, MaterialCommunityIcons, MaterialIcons  } from '@expo/vector-icons';
 //test comment
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -31,9 +31,15 @@ function NavButton(props) {
                 <Ionicons name={props.icon} size={24} color="black" />
             </TouchableOpacity>
         );
-    } else {
+    } else if (props.icon === "score"){
         return (
             <TouchableOpacity style={styles.navButton}>
+                <MaterialIcons name={props.icon} size={24} color="black" />
+            </TouchableOpacity>
+        );
+    } else {
+        return (
+            <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('Saved Emissions')}>
                 <MaterialCommunityIcons name={props.icon} size={24} color="black" />
             </TouchableOpacity>
         );
