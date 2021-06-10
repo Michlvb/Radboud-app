@@ -24,15 +24,6 @@ const firebaseConfig = {
   };
 
 
-// export const getActivity = async (user,department) => {
-//   try {
-//     var users = await database.ref('department/'+department+"/"+user).once('value').then(snapshot => {
-//       return snapshot.val().activity;
-//     })
-//     return users
-//   }catch (error) {
-//     console.log("Error while fetching user data: ", error.message)
-//   } 
 const today = new Date()
 const dd = String(today.getDate()).padStart(2, '0');
 const mm = String(today.getMonth() + 1).padStart(2, '0');
