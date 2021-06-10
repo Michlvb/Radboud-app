@@ -13,7 +13,7 @@ export const showScores = (props) => {
     useEffect(() => {
         const GetUsers = async () => {
         try {
-            const data = await getAllUsersFromDepartmentsOrDepartment('anatomie')
+            const data = await getAllUsersFromDepartmentsOrDepartment(props.route.params.dep)
             const allDeps = await getAllUsersFromDepartmentsOrDepartment()
             setPeople(data)
             setAllDepartments(allDeps)
@@ -31,10 +31,10 @@ export const showScores = (props) => {
             </View>
         )
     }
-
+    
     return (
         <SafeAreaView>
-            <Header afdeling={Switch ? (props.route.params.dep[0].toUpperCase() + props.route.params.dep.substring(1)) : "Afdelingen"}/>
+            <Header afdeling={Switch ? (props.route.params.dep[0].toUpperCase() + props.route.params.dep.substring(1)): "Afdelingen"}/>
                 <FlatList
                     data={Switch ? usersFromDepartment : allDepartments}
                     keyExtractor={(item) => {return item.name}}
