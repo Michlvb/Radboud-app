@@ -42,7 +42,7 @@ export const Home = (props) => {
         }
         setValues()
     }, [])
-
+    console.log(total_distance);
     return (
         <SafeAreaView style={styles.container}>
             <Header username={username}/>
