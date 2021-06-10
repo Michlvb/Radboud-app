@@ -12,7 +12,9 @@ export default class TreesAndCo2 extends React.Component {
             trees: 0,
             last_distance: this.props.route.params.lastdist,
             total_distance: this.props.route.params.totaldist
+            
         };
+        console.log(this.props.route.params.totaldist);
     }
 
     componentDidMount() {
@@ -21,19 +23,19 @@ export default class TreesAndCo2 extends React.Component {
     
     distanceToCO2AndTrees() {
         const uitstootAutoKM = 115 //gram/km
-        let afstandKilometer = this.state.total_distance / 1000;
+        let afstandKilometer = this.state.last_distance / 1000;
         let voorkomenCO2Uitstoot = afstandKilometer * uitstootAutoKM;
         const bomen = voorkomenCO2Uitstoot / 20;
         this.setState({
             co2: voorkomenCO2Uitstoot,
             trees: bomen
         });
+        console.log(this.state.co2, this.state.trees + " testtesttest")
     }
 
     toggleSwitch() {
-        let nextState = !this.state.yearly;
         this.setState({
-            yearly: nextState
+            yearly: !this.state.yearly
         });
     }
 
