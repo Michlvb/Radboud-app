@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Image, Text, Switch } from 'react-native';
+import { View, StyleSheet, Image, Text, Switch, Platform } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import sharedStyles from '../maps/shared-styles';
 
@@ -58,12 +58,12 @@ export default class TreesAndCo2 extends React.Component {
                     <Text style={{fontSize: 20}}>{this.state.yearly ? "Besparing op jaarbasis" : "Besparing van de laatste rit"}</Text>
                 </View>
                 <View style={styles.middleBox}>
-                <Text style={{fontSize: 50}}>{this.state.yearly ? (this.state.trees * 260 * 2) : this.state.trees}</Text>
-                <Image style={styles.treeImage} source={require('../../assets/tree.png')} />
+                <Text style={{fontSize: 50, left: Platform.OS === 'ios' ? 75 : 0}}>{this.state.yearly ? (this.state.trees * 260 * 2) : this.state.trees}</Text>
+                <Image style={Platform.OS === 'android' ? styles.treeImage : styles.treeImageIOS} source={require('../../assets/tree.png')} />
                 </View>
                 <View style={styles.middleBox}>
                     <Text style={{fontSize: 50}}>{this.state.yearly ? (this.state.co2 * 260 * 2) : this.state.co2}gr.</Text>
-                    <Image style={styles.treeImage} source={require('../../assets/co2.png')} />
+                    <Image style={Platform.OS === 'android' ? styles.treesCo2 : styles.treesCo2IOS} source={require('../../assets/co2.png')} />
                 </View>
             </View>
         )
@@ -86,12 +86,25 @@ const styles = StyleSheet.create({
     treeImage: {
         resizeMode: 'center',
         width: '40%',
-        height: '40%',
+        height: '40%'
+    },
+    treeImageIOS: {
+        resizeMode: 'center',
+        width: '70%',
+        height: '70%',
+        resizeMode: 'contain'
     },
     treesCo2: {
         alignItems: 'center',
         justifyContent: 'center',
         height: 50
+    },
+    treesCo2IOS: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '50%',
+        width: '30%',
+        resizeMode: 'contain'
     },
     headerText: {
         fontSize: 16,
