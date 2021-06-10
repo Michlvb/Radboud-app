@@ -26,14 +26,14 @@ export const showScores = (props) => {
     const Header = (props) => {
         return (
             <View style={styles.header}>
-                <Text style={{color: 'white', fontWeight: 'bold'}}>{props.afdeling}</Text> 
-                <Text style={{color: 'white'}}>Scoren</Text>
+                <Text style={{color: 'black', fontWeight: 'bold'}}>{props.afdeling}</Text> 
+                <Text style={{color: 'black'}}>Score</Text>
             </View>
         )
     }
     
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{backgroundColor: "#7B8CDE", flex: 1}}>
             <Header afdeling={Switch ? (props.route.params.dep[0].toUpperCase() + props.route.params.dep.substring(1)): "Afdelingen"}/>
                 <FlatList
                     data={Switch ? usersFromDepartment : allDepartments}
@@ -54,29 +54,43 @@ export const showScores = (props) => {
 
 const styles = StyleSheet.create({
     header: {
+        borderColor: 'black',
+        borderWidth: 1,
+        marginHorizontal: 10,
+        marginTop: 10,
         padding: 20,
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#add8e6',
+        backgroundColor: 'white',
         borderRadius: 10,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     button: {
-        backgroundColor: '#add8e6',
+        marginBottom: 20,
+        backgroundColor: 'lightgreen',
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'space-evenly',
         width: 150,
         height: 30,
-        left: 100
+        left: 100,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 4,
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 4.65,
+        elevation: 8,
 
     },
     listItem : {
+        marginHorizontal: 10,
         padding: 10,
         textAlign: 'center',
         marginVertical: 10,
-        backgroundColor: '#e0ffff',
+        backgroundColor: 'lightgreen',
         borderColor: "black",
         borderWidth: 1,
         borderRadius: 5,
