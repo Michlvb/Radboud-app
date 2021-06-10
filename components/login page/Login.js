@@ -44,7 +44,10 @@ export default function Login(props){
                 onPress={() => 
                     AddUser(name, department.toLowerCase())
                     .then((answer) => {
-                        if(answer) props.navigation.navigate('Home')
+                        if(answer) props.navigation.navigate('Home', {
+                            name: name,
+                            dep: department
+                        })
                         else console.log(answer)
                     })
                     }>
