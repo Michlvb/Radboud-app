@@ -1,8 +1,9 @@
 import React,  {useState, useEffect}  from 'react';
 import { StyleSheet, Text, View} from 'react-native';
+import { getFontScale } from 'react-native/Libraries/Utilities/PixelRatio';
 
-export default function Header(){
-    const name = "Michaël" //Get name from db
+export default function Header(props){
+    const name = props.username
     const date = new Date()
     const hour = date.getHours()
 
@@ -39,6 +40,8 @@ const styles = StyleSheet.create({
         padding: 30
     },
     header: {
-        color: 'white'
+        fontWeight: 'bold',
+        color: 'black',
+        fontSize: 18
     }
 })

@@ -1,14 +1,13 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { Entypo, Ionicons, MaterialCommunityIcons, MaterialIcons  } from '@expo/vector-icons';
+//test comment
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 function NavButton(props) {
-    console.log()
     if(props.icon === "home"){
         return (
             <TouchableOpacity style={styles.navButton}>
@@ -24,13 +23,27 @@ function NavButton(props) {
     } 
     else if (props.icon === "bicycle"){
         return (
-            <TouchableOpacity style={styles.navButton} >
+            <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('EmptyMap', {
+                name: props.name,
+                dep: props.dep
+            })} >
                 <Ionicons name={props.icon} size={24} color="black" />
+            </TouchableOpacity>
+        );
+    } else if (props.icon === "score"){
+        return (
+            <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('Scoreboard', {
+                dep: props.dep
+            })}>
+                <MaterialIcons name={props.icon} size={24} color="black" />
             </TouchableOpacity>
         );
     } else {
         return (
-            <TouchableOpacity style={styles.navButton}>
+            <TouchableOpacity style={styles.navButton} onPress={() => props.navigation.navigate('Saved Emissions', {
+                lastdist: props.ldist,
+                totaldist: props.tdist
+            })}>
                 <MaterialCommunityIcons name={props.icon} size={24} color="black" />
             </TouchableOpacity>
         );

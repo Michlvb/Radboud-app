@@ -7,13 +7,15 @@ class Navbar extends Component {
         super(props);
         this.state = {};
     }
+
     render() {
         return (
             <View style={styles.navBar}>
                 <NavButton icon="home" navigation={this.props.navigation}/>
-                <NavButton icon="bicycle" navigation={this.props.navigation}/>
+                <NavButton icon="bicycle" navigation={this.props.navigation} name={this.props.name} dep={this.props.dep}/>
                 <NavButton icon="camera" navigation={this.props.navigation}/>
-                <NavButton icon="molecule-co2" navigation={this.props.navigation}/>
+                <NavButton icon="molecule-co2" navigation={this.props.navigation} ldist={this.props.ldist} tdist={this.props.tdist}/>
+                <NavButton icon="score" navigation={this.props.navigation} dep={this.props.dep}/>
             </View>
         );
     }
